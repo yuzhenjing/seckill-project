@@ -1,0 +1,16 @@
+
+spring:
+  dubbo:
+      application:
+        name: provider
+      base-package: com.fast.api
+      registry:
+        address: zookeeper://47.100.223.169
+        port: 2181
+      protocol:
+        name: dubbo
+        serialization: hessian2
+      provider:
+        retries: 0
+server:
+  port: 8084

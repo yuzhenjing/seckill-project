@@ -6,6 +6,7 @@ import com.fast.api.seckill.SeckillKafkaService;
 import com.fast.api.seckill.SeckillService;
 import com.fast.api.seckill.SeckillStockOrderService;
 import com.fast.api.seckill.SeckillStockService;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -22,25 +23,30 @@ public class SeckillServiceImpl implements SeckillService {
     private SeckillKafkaService seckillKafkaService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void executeSeckill(Integer sid) throws Exception {
 
+
         /**
-         * 校验库存
+         * kafka 异步处理
          */
-        seckillStockService.checkStockCount(sid);
-
-
         seckillKafkaService.sendSeckillTask(sid);
 
+//
+//        /**
+//         * 校验库存
+//         */
+//        seckillStockService.checkStockCount(sid);
+//
+//        /**
+//         * 更新库存
+//         */
+//        seckillStockService.updateStockCount(sid);
+//
+//        /**
+//         * 创建订单
+//         */
+//        seckillStockOrderService.createSeckillOrder(sid);
 
-        /**
-         * 创建订单
-         */
-        seckillStockOrderService.createSeckillOrder(sid);
-
-        /**
-         * 更新库存
-         */
-        seckillStockService.updateStockCount(sid);
     }
 }

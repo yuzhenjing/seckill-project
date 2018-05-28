@@ -5,6 +5,7 @@ import com.fast.api.seckill.SeckillStockOrderService;
 import com.fast.api.seckill.SeckillStockService;
 import com.fast.dao.seckill.SeckillOrderDAO;
 import com.fast.pojo.seckill.SeckillOrder;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -20,6 +21,7 @@ public class SeckillStockOrderServiceImpl implements SeckillStockOrderService {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer createSeckillOrder(Integer sid) {
         SeckillOrder seckillOrder = new SeckillOrder();
         seckillOrder.setSid(sid);

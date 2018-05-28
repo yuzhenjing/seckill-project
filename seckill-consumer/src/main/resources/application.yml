@@ -3,7 +3,7 @@ spring:
   dubbo:
       application:
         name: provider
-      base-package: com.fast.api
+      base-package: com.fast
       registry:
         address: zookeeper://47.100.223.169
         port: 2181
@@ -12,5 +12,11 @@ spring:
         serialization: hessian2
       provider:
         retries: 0
+  application:
+    name: seckill-consumer
+  kafka:
+    bootstrap-servers: 47.100.223.169:9092
+    consumer:
+      group-id: 0
 server:
-  port: 8083
+  port: 8084

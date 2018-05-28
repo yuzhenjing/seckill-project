@@ -37,7 +37,7 @@ public class SeckillController {
         return resultMap;
     }
 
-    @GetMapping("/executeSeckill")
+    @GetMapping("/executeSeckill/{sid}")
     public SeckillResultVO executeSeckill(@PathVariable Integer sid) throws Exception {
         seckillService.executeSeckill(sid);
         return null;

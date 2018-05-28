@@ -32,6 +32,6 @@ public class SeckillRedisServiceImplTest {
 
     @Test
     public void setSeckillStcok() {
-        seckillRedisService.setSeckillStcok(new StockDTO(1, 1, 1, 1));
+        seckillRedisService.setSeckillStcok(new StockDTO(1, 10, 0, 0));
     }
 }

@@ -10,6 +10,8 @@ import com.fast.pojo.seckill.Stock;
 import org.springframework.beans.BeanUtils;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class SeckillStockServiceImpl implements SeckillStockService {
@@ -40,21 +42,23 @@ public class SeckillStockServiceImpl implements SeckillStockService {
 
         StockDTO stock = queryStockInfo(sid);
         if (stock == null || stock.getStockCount().compareTo(stock.getStockSale()) <= 0) {
-            throw new RuntimeException("库存不足。。。。");
+            throw new RuntimeException("被抢光了 下次提前来哟！！！");
         }
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Integer updateStockCount(Integer sid) {
 
+        Stock stock = seckillStockDAO.getOne(sid);
+        Integer count = seckillStockDAO.updateStock(sid, stock.getStockVersion());
+        if (count == 0) {
+            throw new RuntimeException("更新库存失败！！！");
+        }
         /**
          * 更新缓存中库存信息
          */
         seckillRedisService.updateSeckillStockInfo(sid);
-        Stock stock = seckillStockDAO.getOne(sid);
-        stock.setStockSale(stock.getStockSale() + 1);
-        stock.setStockVersion(stock.getStockVersion() + 1);
-        seckillStockDAO.saveAndFlush(stock);
-        return null;
+        return count;
     }
 }

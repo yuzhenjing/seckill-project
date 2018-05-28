@@ -13,4 +13,4 @@ spring:
       provider:
         retries: 0
 server:
-  port: 8084
+  port: 8083

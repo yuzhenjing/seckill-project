@@ -15,9 +15,6 @@ public class SeckillKafkaServiceImpl implements SeckillKafkaService {
 
     @Override
     public void sendSeckillTask(Integer sid) {
-
-        kafkaTemplate.send("SECKILL", sid + "");
-
         kafkaTemplate.send(new ProducerRecord("SECKILL", sid + ""));
 
     }

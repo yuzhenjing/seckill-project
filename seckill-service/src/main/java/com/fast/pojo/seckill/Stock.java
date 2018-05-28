@@ -13,7 +13,7 @@ public class Stock {
     @GeneratedValue
     private Integer id;
 
-    private Integer stockcount;
+    private Integer stockCount;
 
     private Integer stockSale;
 

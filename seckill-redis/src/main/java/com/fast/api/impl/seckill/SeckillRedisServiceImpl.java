@@ -26,8 +26,11 @@ public class SeckillRedisServiceImpl implements SeckillRedisService {
     @Override
     public void updateSeckillStockInfo(Integer sid) {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.increment(SeckillStockConstant.STOCK_SALE + sid, 1);
-        operations.increment(SeckillStockConstant.STOCK_VERSION + sid, 1);
+        final Long sale = operations.increment(SeckillStockConstant.STOCK_SALE + sid, 1);
+        final Long version = operations.increment(SeckillStockConstant.STOCK_VERSION + sid, 1);
+        if (sale < 0 || version < 0) {
+            throw new RuntimeException("更新redis中库存出错");
+        }
 
     }
 

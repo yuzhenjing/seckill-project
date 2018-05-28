@@ -1,4 +1,3 @@
-
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -24,10 +23,15 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     #建表时使用InnoDB引擎
     databasePlatform: "org.hibernate.dialect.MySQL5InnoDBDialect"
+    open-in-view: false
+    properties:
+      hibernate :
+        enable_lazy_load_no_trans : true
+
 
   dubbo:
       application:
@@ -41,5 +45,10 @@ spring:
         serialization: hessian2
       provider:
         retries: 0
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      force-response: true
 server:
-  port: 8083
+  port: 8082
